@@ -1,248 +1,125 @@
-# Project Nexus Backend 🐍
+# Peer Voting System 🗳️
 
-## 📌 About Project Nexus
+> **A Full-Stack Evaluation Platform for Student Cohorts.**
+> *Secure, transparent, and interactive project voting with real-time leaderboards.*
 
-Project Nexus is a backend evaluation and voting system designed for **ALX students** to vote for the best peer projects. It promotes **fair and transparent judging** using a **criteria-based weighted rating system** instead of simple likes.
+![Stack](https://img.shields.io/badge/Stack-Full--Stack-blue) ![Status](https://img.shields.io/badge/Status-MVP_Ready-success) ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-It supports judging for:
+## 📌 About the System
+The **Peer Voting System** is a production-ready evaluation platform designed for **ALX students** to vote for peer projects. Unlike simple "like" buttons, this system implements a weighted, criteria-based rating system (Innovation, Design, Code Quality) to ensure fair judging.
 
-* Online Polling Systems
-* Movie Recommendation Apps
-* E-commerce Catalogues
-* Job Platforms
-* Social Media Feed Apps
-
-The system evaluates projects using metrics such as **Innovation**, **Design**, **Code Quality**, and **UI/UX**.
+It features a decoupled architecture with a **Django REST API** managing data/logic and a **React + Tailwind** frontend delivering a modern, responsive user experience.
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-### 🔐 User Management
+### 🖥️ Frontend (React & Tailwind)
+* **Interactive Dashboard:** Visual analytics showing voting status, rank, and community activity.
+* **Live Leaderboard:** Real-time "Hall of Fame" podium ranking the top 3 projects.
+* **Smart Search:** Instant filtering of projects by name or category.
+* **Responsive Design:** Fully optimized for Mobile, Tablet, and Desktop.
 
-* Student authentication (JWT-based).
-* Secure voting (1 user = 1 vote per project per criteria).
-
-### 📚 Project Repository
-
-Stores all student-submitted apps, such as:
-
-* "Social Media Feed"
-* "Job Platform"
-* "Movie Recommendation App"
-
-### 🗳 Criteria-Based Voting
-
-* Multi-criteria scoring.
-* Detailed feedback supported.
-
-### 📊 Score Calculation
-
-* Weighted score aggregation.
-* Determines:
-
-  * **Top Project Overall**
-  * **Top Project per Category**
-
-### 🚀 Performance & Background Tasks
-
-* **Redis Caching** for fast leaderboard loading.
-* **Celery Worker** for asynchronous tasks.
-* **Celery Beat** scheduled tasks (nightly cleanup).
-* **Email notifications** triggered when a rating is submitted.
-
-### 💬 Feedback & Comments
-
-Students can comment on each project.
-
-### 🛠 Admin Dashboard
-
-Manage Projects, Criteria, Users, Comments, and Ratings.
+### ⚙️ Backend (Django & Redis)
+* **Secure Auth:** JWT-based login/registration (HttpOnly cookies capable).
+* **Voting Logic:** Enforces one vote per user per project.
+* **Background Tasks:** Celery + Redis handle email notifications asynchronously.
+* **Scheduled Jobs:** Celery Beat runs nightly cleanup scripts.
 
 ---
 
-## 🏗 Architecture & Tech Stack
+## 🛠 Tech Stack
 
-* **Backend:** Django (Python 3.11)
-* **API Layer:** Django REST Framework
-* **Database:** PostgreSQL
-* **Cache & Message Queue:** Redis
-* **Background Tasks:** Celery + Celery Beat
-* **Containers:** Docker / Docker Compose
-* **Editor:** VS Code (Git Bash on Windows)
-
-### 🐳 Docker Services
-
-* **Redis** → caching + message queue
-* **Celery Worker** → async tasks
-* **Celery Beat** → scheduled tasks
+| Domain | Technologies |
+| :--- | :--- |
+| **Frontend** | React (Vite), Tailwind CSS, shadcn/ui, Framer Motion, Axios |
+| **Backend** | Python 3.11, Django 5, Django REST Framework (DRF) |
+| **Database** | PostgreSQL (Production), SQLite (Dev) |
+| **Async** | Redis, Celery, Celery Beat |
+| **DevOps** | Docker, Docker Compose, Gunicorn, Whitenoise |
 
 ---
 
-## ☁️ Deployment Configuration (Render)
+## 📁 Project Structure (Monorepo)
 
-### 📜 `build.sh`
+```text
+voting-system/
+├── backend/               # 🐍 Django API & Logic
+│   ├── core/              # Main App (Views, Models, Tests)
+│   ├── manage.py
+│   ├── build.sh           # Render Deployment Script
+│   └── requirements.txt
+│
+├── frontend/              # ⚛️ React UI
+│   ├── src/               # Components & Pages
+│   ├── package.json
+│   └── vite.config.js
+│
+└── docker-compose.yaml    # Orchestration
 
-Executes during Render Build Phase:
+🚀 Getting Started
+Follow these instructions to run the full stack locally.
 
-1. Install dependencies
-2. Collect static files
-3. Apply database migrations
+1️⃣ Backend Setup (Terminal A)
 
-### 📜 `start.sh`
+cd backend
 
-Handles multi-process execution inside a **single Render dyno**:
+# Create & Activate Virtual Env
+python -m venv env
+source env/Scripts/activate  # (Mac/Linux: source env/bin/activate)
 
-* Celery Worker
-* Celery Beat
-* Gunicorn (Django server)
+# Install Dependencies
+pip install -r requirements.txt
 
----
+# Run Migrations & Start Server
+python manage.py migrate
+python manage.py runserver
 
-## 🚧 Challenges & Solutions
+Backend runs at: http://localhost:8000
 
-### 🐍 Python 3.14 Issue
+2️⃣ Frontend Setup (Terminal B)
+Bash
 
-* Python 3.14 broke Celery/Kombu on Windows.
-* **Solution:** Switched to Python **3.11**.
+cd frontend
 
-### 🐳 Docker Networking on Windows
+# Install Dependencies
+npm install
 
-* Redis in Docker couldn't talk to Django.
-* **Solution:** Exposed correct ports + switched to `127.0.0.1`.
+# Start React Dev Server
+npm run dev
+Frontend runs at: http://localhost:5173
 
-### 🔄 API Versioning Broke Tests
+3️⃣ Background Workers (Optional)
+Required only if you want to test email notifications locally.
 
-* Moving to `/api/v1/` required updating test URLs.
-* **Solution:** Updated tests and adapted to DRF Pagination.
+Bash
 
----
+docker compose up
 
-## 🗂 ERD (Entity Relationship Diagram)
+Database Schema (ERD)
+The system manages relationships between Users, Projects, and Criteria-based Ratings.
 
-```
+Plaintext
+
 USER 1---∞ RATING ∞---1 PROJECT
           |
           ∞
        CRITERIA
-```
 
-Comments also link to Users and Projects.
-
----
-
-## 📁 Project Structure
-
-```
-project-nexus-backend/
-├── env/                 
-├── core/                # Main App Logic + TESTS DIRECTORY
-│   ├── viewsets.py
-│   ├── models.py
-│   └── tests/           # <── All test cases are stored here
-│        ├── test_auth.py
-│        ├── test_project.py
-│        ├── test_rating.py
-│        ├── test_rating_unique.py
-│        └── test_top_project.py
-├── polling_system/
-├── docker-compose.yaml
-├── Dockerfile
-├── build.sh
-├── start.sh
-├── manage.py
-└── README.md
-```
-
----
-
-# 🧪 Testing
-
-All automated tests for this project are located inside the **`core/tests/`** directory.
-
-Example from your environment (matching screenshot):
-
-```
-core/
-└── tests/
-     ├── test_auth.py
-     ├── test_project.py
-     ├── test_rating.py
-     ├── test_rating_unique.py
-     └── test_top_project.py
-```
-
-### ✔️ Running Tests
-
-Use Django’s built-in test runner:
-
-```bash
+# Run Backend Tests
+cd backend
 python manage.py test core
-```
 
-### ✔️ Example Output (Your Environment)
+Deployment
+Backend: Deployed on Render (using build.sh).
 
-```
-Found 5 test(s).
-Creating test database for alias 'default'...
-System check identified no issues (0 silenced).
-.....
-----------------------------------------------------------------------
-Ran 5 tests in 22.371s
+Frontend: Deployed on Vercel.
 
-OK
-Destroying test database for alias 'default'...
-```
+Database: Hosted on Neon / Render PostgreSQL.
 
-All tests passed successfully.
+👤 Author
+Wandile
 
----
+Full Stack Software Engineer
 
-## 🧪 Test Coverage Setup (Optional)
-
-To generate a coverage report:
-
-```bash
-pip install coverage
-coverage run manage.py test core
-coverage html
-```
-
-This will create an `/htmlcov` folder containing a graphical HTML coverage report.
-
----
-
-# 🚀 Installation & Setup
-
-### 1. Start Infrastructure (Redis + Celery)
-
-```bash
-docker compose up
-```
-
-### 2. Backend Setup
-
-```bash
-source env/Scripts/activate
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py createsuperuser
-python manage.py runserver
-```
-
----
-
-# 🧵 API Endpoints (Verified)
-
-| Method | Endpoint                          | Description                            |
-| ------ | --------------------------------- | -------------------------------------- |
-| POST   | `/auth/jwt/create/`               | Obtain JWT tokens                      |
-| GET    | `/api/v1/projects/`               | List all projects                      |
-| POST   | `/api/v1/projects/`               | Create a project                       |
-| POST   | `/api/v1/projects/{id}/ratings/`  | Rate a project (Triggers Celery email) |
-| POST   | `/api/v1/projects/{id}/comments/` | Add feedback                           |
-| GET    | `/api/v1/projects/top/`           | Cached leaderboard                     |
-
----
-
-
+SaaS & MVP Developer
