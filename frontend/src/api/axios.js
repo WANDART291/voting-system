@@ -1,16 +1,17 @@
 import axios from 'axios';
 
+// Use the environment variable if it exists, otherwise fallback to localhost
+const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 const api = axios.create({
-    baseURL: 'http://localhost:8000', // Adjust if your backend port is different
+    baseURL: baseURL,
 });
 
-// --- THE MAGIC PART ---
-// This checks for a token before EVERY request is sent
 api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('access_token');
         if (token) {
-            config.headers.Authorization = `JWT ${token}`; // Djoser uses 'JWT', not 'Bearer' by default
+            config.headers.Authorization = `JWT ${token}`;
         }
         return config;
     },
