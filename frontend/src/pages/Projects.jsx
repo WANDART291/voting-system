@@ -55,10 +55,9 @@ const Projects = () => {
   )
 
   return (
-    // FIXED: p-4 for mobile, p-8 for desktop
     <div className="min-h-screen bg-zinc-50 p-4 md:p-8">
       
-      {/* 1. Header & Search - FIXED: Flex-col for mobile stacking */}
+      {/* 1. Header & Search */}
       <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -94,7 +93,7 @@ const Projects = () => {
           <Loader2 className="h-8 w-8 animate-spin text-zinc-400" />
         </div>
       ) : (
-        /* 3. Projects Grid - Already responsive (grid-cols-1 to grid-cols-3) */
+        /* 3. Projects Grid */
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto pb-10">
           {filteredProjects.map((project, index) => (
             <motion.div 
@@ -103,7 +102,11 @@ const Projects = () => {
               animate={{ opacity: 1, y: 0 }} 
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="hover:shadow-lg transition-shadow h-full flex flex-col">
+              {/* THE MAGIC HAPPENS HERE: Added onClick and cursor-pointer to the Card */}
+              <Card 
+                onClick={() => navigate(`/projects/${project.id}`)}
+                className="hover:shadow-lg transition-shadow h-full flex flex-col cursor-pointer"
+              >
                 <CardHeader>
                   <div className="flex justify-between items-start">
                     <Badge variant="secondary" className="mb-2 uppercase text-[10px] md:text-xs">
@@ -127,8 +130,12 @@ const Projects = () => {
                   <Button 
                     variant="outline" 
                     className="flex-1 bg-white hover:bg-zinc-50 text-xs md:text-sm"
-                    onClick={() => window.open(`https://github.com/search?q=${project.name}`, '_blank')}
+                    onClick={(e) => {
+                      e.stopPropagation() // Prevents clicking the card background
+                      window.open(`https://github.com/search?q=${project.name}`, '_blank')
+                    }}
                   >
+                    {/* FIXED: Changed Code to Code2 here! */}
                     <Code2 className="h-4 w-4 mr-2" /> Code
                   </Button>
                   
@@ -138,7 +145,10 @@ const Projects = () => {
                         ? "bg-green-600 hover:bg-green-700 text-white" 
                         : "bg-zinc-900 text-white hover:bg-zinc-800"
                     }`}
-                    onClick={() => handleVote(project)}
+                    onClick={(e) => {
+                      e.stopPropagation() // Prevents clicking the card background
+                      handleVote(project)
+                    }}
                     disabled={project.has_voted || votingId === project.id}
                   >
                     {votingId === project.id ? (

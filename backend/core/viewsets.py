@@ -82,8 +82,16 @@ class RatingViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    
     def get_queryset(self):
         return Comment.objects.filter(project_id=self.kwargs["project_pk"])
+
+    # THE FIX: Explicitly attaching the user and project ID before saving
+    def perform_create(self, serializer):
+        serializer.save(
+            user=self.request.user,
+            project_id=self.kwargs["project_pk"]
+        )
 
 class CriteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Criteria.objects.all()

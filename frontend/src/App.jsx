@@ -1,15 +1,15 @@
 import Projects from "./pages/Projects"
-import Leaderboard from "./pages/Leaderboard" // <--- IMPORTED LEADERBOARD
+import Leaderboard from "./pages/Leaderboard"
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { LayoutDashboard, CheckCircle2 } from "lucide-react"
 import Login from "./pages/Login"
 import Dashboard from "./pages/Dashboard" 
+import ProjectDetail from "./pages/ProjectDetail" // <--- 1. NEW IMPORT
 
-// We moved your Home Page into a small component here so we can use navigation
 const Home = () => {
-  const navigate = useNavigate(); // This is the hook that lets us change pages
+  const navigate = useNavigate();
 
   return (
     <div className="h-screen flex flex-col items-center justify-center bg-zinc-50 gap-6 px-4">
@@ -38,7 +38,6 @@ const Home = () => {
         transition={{ delay: 0.2 }}
         className="flex gap-4"
       >
-        {/* OnClick event triggers navigation to /login */}
         <Button 
           onClick={() => navigate('/login')} 
           className="bg-zinc-900 text-white hover:bg-zinc-800 px-8 py-6 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all"
@@ -61,7 +60,6 @@ const Home = () => {
   )
 }
 
-// This is the main "Traffic Controller" for your app
 export default function App() {
   return (
     <Router>
@@ -70,8 +68,9 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} /> 
         <Route path="/projects" element={<Projects />} />
-        {/* The new Leaderboard Route */}
         <Route path="/leaderboard" element={<Leaderboard />} /> 
+        {/* 2. THE DYNAMIC ROUTE. The :id tells React to expect a number here */}
+        <Route path="/projects/:id" element={<ProjectDetail />} />
       </Routes>
     </Router>
   )

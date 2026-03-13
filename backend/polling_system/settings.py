@@ -114,16 +114,15 @@ TEMPLATES = [
 WSGI_APPLICATION = 'polling_system.wsgi.application'
 
 # --- DATABASE CONFIGURATION ---
+# --- DATABASE CONFIGURATION ---
+# --- DATABASE CONFIGURATION ---
 DATABASES = {
     "default": dj_database_url.config(
-        # This will automatically use DATABASE_URL from Render if available.
-        # Otherwise, it falls back to your local connection string.
-        default="postgres://postgres:admin123@localhost:5432/project_nexusdb",
+        default="postgres://postgres:password123@localhost:5432/project_nexusdb",
         conn_max_age=600,
         conn_health_checks=True,
     )
 }
-
 AUTH_PASSWORD_VALIDATORS = [
     { 'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
     { 'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
