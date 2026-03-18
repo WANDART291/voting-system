@@ -1,12 +1,37 @@
-# Peer Voting System 🗳️
+# Project Nexus: Peer Voting System 🗳️
 
 > **A Full-Stack Evaluation Platform for Student Cohorts.**
 > *Secure, transparent, and interactive project voting with real-time leaderboards.*
 
 ![Stack](https://img.shields.io/badge/Stack-Full--Stack-blue) ![Status](https://img.shields.io/badge/Status-MVP_Ready-success) ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
+🚀 **[View the Live Demo Here](https://voting-system-wine.vercel.app/)**
+
+### Demo Access
+To explore the application safely as a guest, use the following credentials:
+* **Email:** `demo@test.com`
+* **Password:** `Demo123!`
+
+---
+
+## 📸 Platform Interface
+
+### The Dashboard
+![Dashboard Overview](./screenshot/dashboard.png)
+*Visual analytics showing voting status, rank, and community activity.*
+
+### Project Gallery & Voting
+![Projects View](./screenshot/projects.png)
+*Interactive project filtering and real-time voting engine.*
+
+### Live Leaderboard
+![Leaderboard](./screenshot/leaderboard.png)
+*Dynamic "Hall of Fame" podium ranking the top 3 projects.*
+
+---
+
 ## 📌 About the System
-The **Peer Voting System** is a production-ready evaluation platform designed for **ALX students** to vote for peer projects. Unlike simple "like" buttons, this system implements a weighted, criteria-based rating system (Innovation, Design, Code Quality) to ensure fair judging.
+The **Peer Voting System** is a production-ready evaluation platform originally designed for ALX students to vote for peer projects. Unlike simple "like" buttons, this system implements a weighted, criteria-based rating system (Innovation, Design, Code Quality) to ensure fair judging.
 
 It features a decoupled architecture with a **Django REST API** managing data/logic and a **React + Tailwind** frontend delivering a modern, responsive user experience.
 
@@ -57,11 +82,6 @@ voting-system/
 │
 └── docker-compose.yaml    # Orchestration
 
-🚀 Getting Started
-Follow these instructions to run the full stack locally.
-
-1️⃣ Backend Setup (Terminal A)
-
 cd backend
 
 # Create & Activate Virtual Env
@@ -75,11 +95,6 @@ pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 
-Backend runs at: http://localhost:8000
-
-2️⃣ Frontend Setup (Terminal B)
-Bash
-
 cd frontend
 
 # Install Dependencies
@@ -87,39 +102,13 @@ npm install
 
 # Start React Dev Server
 npm run dev
-Frontend runs at: http://localhost:5173
-
-3️⃣ Background Workers (Optional)
-Required only if you want to test email notifications locally.
-
-Bash
-
-docker compose up
-
-Database Schema (ERD)
-The system manages relationships between Users, Projects, and Criteria-based Ratings.
-
-Plaintext
 
 USER 1---∞ RATING ∞---1 PROJECT
           |
           ∞
        CRITERIA
 
-# Run Backend Tests
 cd backend
 python manage.py test core
 
-Deployment
-Backend: Deployed on Render (using build.sh).
-
-Frontend: Deployed on Vercel.
-
-Database: Hosted on Neon / Render PostgreSQL.
-
-👤 Author
-Wandile
-
-Full Stack Software Engineer
-
-SaaS & MVP Developer
+👤 Author: Wandile Khanyile | Full Stack Software Engineer 
