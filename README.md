@@ -17,15 +17,15 @@ To explore the application safely as a guest, use the following credentials:
 ## 📸 Platform Interface
 
 ### The Dashboard
-![Dashboard Overview](./screenshot/dashboard.png)
+![Dashboard Overview](./screenshots/dashboard.png)
 *Visual analytics showing voting status, rank, and community activity.*
 
 ### Project Gallery & Voting
-![Projects View](./screenshot/projects.png)
+![Projects View](./screenshots/projects.png)
 *Interactive project filtering and real-time voting engine.*
 
 ### Live Leaderboard
-![Leaderboard](./screenshot/leaderboard.png)
+![Leaderboard](./screenshots/leaderboard.png)
 *Dynamic "Hall of Fame" podium ranking the top 3 projects.*
 
 ---
