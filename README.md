@@ -5,7 +5,7 @@
 
 ![Stack](https://img.shields.io/badge/Stack-Full--Stack-blue) ![Status](https://img.shields.io/badge/Status-MVP_Ready-success) ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-🚀 **[View the Live Demo Here](https://voting-system-wine.vercel.app/)**
+🚀 **[View the Live Demo Here](https://voting-system-fbwi8vi92-wandiles-projects-9dfdb5bc.vercel.app)**
 
 ### Demo Access
 To explore the application safely as a guest, use the following credentials:
